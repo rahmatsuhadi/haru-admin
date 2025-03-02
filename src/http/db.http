@@ -1,0 +1,26 @@
+# baseURL
+@baseURL = http://localhost:3000/api/v1/schema/
+
+###
+# Find All Databasese
+GET {{ baseURL }}/databases
+
+###
+# Find Databases By Id
+GET {{ baseURL }}/databases/51
+
+###
+# Create Databases
+POST {{ baseURL }}/databases
+Content-Type: application/json
+
+{
+    "projectName": "Project Test 5 mongo",
+    "name": "mongo_test_5",
+    "type": "mongodb",
+    "uri": "mongodb://localhost:27017"
+}
+
+###
+# delete DAtabase By Id
+DELETE  {{ baseURL }}/databases/11

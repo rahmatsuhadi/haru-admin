@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TypeDatabase {
+  mongodb
+  mysql
+}
+
+enum RelationType {
+  ONE_TO_ONE
+  ONE_TO_MANY
+  MANY_TO_MANY
+}
+
+enum FieldType {
+  STRING
+  NUMBER
+  INT
+  FLOAT
+  BOOLEAN
+  DATE
+  DATETIME
+  RELATION
+  JSON
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
+  databases Database[]
+}
+
+model Database {
+  id          Int          @id @default(autoincrement())
+  projectName String
+  name        String
+  type        TypeDatabase
+  uri         String
+  createdAt   DateTime     @default(now())
+  tables      Table[]
+  owner       User?         @relation(fields: [ownerId], references: [id])
+  ownerId     Int?          @map("user_id")
+}
+
+model Table {
+  id         Int      @id @default(autoincrement())
+  name       String
+  databaseId Int      @map("database_id")
+  // type       TableType
+  fields     Field[]
+  database   Database @relation(fields: [databaseId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Field {
+  id         Int      @id @default(autoincrement())
+  name       String
+  isPrimary  Boolean?  @default(false)
+  isRequired Boolean?  @default(true)
+  type       FieldType
+  tableId    Int    @map("table_id")
+
+  table     Table    @relation(fields: [tableId], references: [id])
+  createdAt DateTime @default(now())
+}

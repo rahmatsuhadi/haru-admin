@@ -1,0 +1,70 @@
+# baseURL
+@baseURL = http://localhost:3000
+
+###
+# Find All Tables1
+GET {{ baseURL }}/databases/13
+
+
+
+###
+# Create Table
+POST {{ baseURL }}/databases/13
+Content-Type: application/json
+
+{
+    "name": "dosen",    
+    "fields":[
+        {
+            "name": "nama",
+            "isRequired": true,
+            "type": "STRING"
+        },
+        {
+            "name": "alamat",
+            "isRequired": true,
+            "type": "STRING"
+        }
+        
+    ]
+}
+###
+# Find Schema Tables
+GET {{ baseURL }}/databases/13/dosen
+
+
+###
+# Delete  Tables
+DELETE  {{ baseURL }}/databases/6/users
+
+
+
+###
+# Add Column Table
+POST {{ baseURL }}/databases/10/users/add-column
+Content-Type: application/json
+
+{
+    "fields":[
+    {
+        "name": "id2",
+        "isRequired": true,
+        "type": "INT"
+    },
+    {
+        "name": "1",
+        "isRequired": true,
+        "type": "STRING"
+    }
+    
+    ]
+}
+
+###
+# Drop Column Table
+POST {{ baseURL }}/databases/10/users/drop-column
+Content-Type: application/json
+
+{
+    "fields":[ "alamat"]
+}

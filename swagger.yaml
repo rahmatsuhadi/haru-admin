@@ -1,0 +1,527 @@
+
+
+tags:
+- name: databases
+  description: Manage Database API
+
+- name: tables
+  description: Manage Table API
+
+
+- name: column
+  description: Manage Column Table API
+- name: record
+  description: Manage Data Record Table API
+
+paths:
+# [GET] databases
+  /api/v1/schema/databases:
+    get:
+      tags:
+      - databases
+      summary: Find All Databases
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+# [POST] databases
+    post:
+      tags:
+      - databases
+      summary: Create Database
+      parameters:
+      - name: body
+        in: body
+        description: databases Data
+        required: true
+        schema:
+          $ref: '#/definitions/databases'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    delete:
+      tags:
+      - databases
+      summary: Delete Database By Id
+      parameters:
+      - name: id
+        in: path
+        description: database Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+
+# paths:
+# [GET] tables
+  /api/v1/schema/databases/{id}:
+    get:
+    
+      tags:
+      - tables
+      summary: Find All Tables
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+        404:
+          description: 'Not Found'
+    
+# [POST] tabels Create
+    post:
+      tags:
+      - tables
+      summary: Create Tables
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: tables Data
+        required: true
+        schema:
+          $ref: '#/definitions/tables'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+# [GET] tables field
+  /api/v1/schema/databases/{id}/{table}:
+    get:
+      tags:
+      - tables
+      summary: Find Column Tables
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+# [DELETE] /api/v1/schema/databases/{id}
+    delete:
+      tags:
+      - tables
+      summary: Delete Tables By name
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+# [POST] /api/v1/schema/databases/{id}/{table}/add-column
+  /api/v1/schema/databases/{id}/{table}/add-column:
+    post:
+      tags:
+      - column
+      summary: Add Column Tables 
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: Column Data
+        required: true
+        schema:
+          $ref: '#/definitions/column'
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+          
+
+# [POST] /api/v1/schema/databases/{id}/{table}/drop-column
+  /api/v1/schema/databases/{id}/{table}/drop-column:
+    post:
+      tags:
+      - column
+      summary: Drop Column Tables 
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: Column Data
+        required: true
+        schema:
+          $ref: '#/definitions/drop-column'
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [POST] /api/v1/schema/databases/{id}/{table}/drop-column
+  /api/v1/schema/databases/{id}/{table}/view:
+    post:
+      tags:
+      - tables
+      summary: View Data Tables 
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: Request Data
+        required: true
+        # schema:
+        #   $ref: '#/definitions/drop-column'
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+
+# [GET] /api/v2/{id}/{table}
+  /api/v2/{id}/{table}:
+    get:
+      tags:
+      - record
+      summary: Find All record
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+# [POST] /api/v2/{id}/{table}
+    post:
+      tags:
+      - record
+      summary: Create record
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: body
+        in: body
+        description: record Data
+        required: true
+        schema:
+          $ref: '#/definitions/record'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [GET] /api/v2/{id}/{table}/{recordId}
+  /api/v2/{id}/{table}/{recordId}:
+    get:
+      tags:
+      - record
+      summary: Find record By Id
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: recordId
+        in: path
+        description: record Id
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Not found'
+        500:
+          description: 'Server Error'
+
+# [PATCH] /api/v2/{id}/{table}/{recordId}
+    patch:
+      tags:
+      - record
+      summary: Update record
+      parameters:
+        - name: id
+          in: path
+          description: Database Id
+          required: true
+          type: integer
+        - name: table
+          in: path
+          description: Table Name
+          required: true
+          type: string
+        - name: recordId
+          in: path
+          description: record Id
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: record Data
+          required: true
+          schema:
+            $ref: '#/definitions/record'
+          responses:
+          201:
+            description: 'Updated'
+          400:
+            description: 'Bad Request'
+          409:
+            description: 'Conflict'
+          500:
+            description: 'Server Error'
+
+# [DELETE] /api/v2/{id}/{table}/{recordId}
+    delete:
+      tags:
+      - record
+      summary: Delete record
+      parameters:
+      - name: id
+        in: path
+        description: Database Id
+        required: true
+        type: integer
+      - name: table
+        in: path
+        description: Table Name
+        required: true
+        type: string
+      - name: recordId
+        in: path
+        description: record Id
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+
+# definitions
+definitions:
+  tables:
+    type: object
+    required:
+        - name
+        - fields
+    properties:
+      name:
+        type: string
+        description: name Table
+      fields:
+        type: array
+        description: 'List of fields for the table'
+        items:
+          type: object
+          required:
+            - name
+            - type
+            - isRequired
+          properties:
+            name:
+              type: string
+              description: 'Name of the field'
+            type:
+              type: string
+              enum:
+                - NUMBER
+                - STRING
+                - DATE 
+                - BOOLEAN
+              description: 'Data type of the field (e.g., string, integer, etc.)'
+            isRequired:
+              type: boolean
+              description: 'Indicates whether the field is required'
+  databases:
+    type: object
+    required:
+        - projectName
+        - name
+        - type
+        - uri
+    properties:
+      projectName:
+        type: string
+        description: name Project
+      name:
+        type: string
+        description: name Databases
+      uri:
+        type: string
+        description: uri Database
+      type:
+        type: string
+        enum:
+            - mysql
+            - mongodb
+        description: type Database 'mysql' or 'mongodb'
+  column:
+      type: object
+      required: 
+            - fields
+      properties:
+        fields:
+          type: array
+          description: 'List of fields for the table'
+          items:
+            type: object
+            required:
+              - name
+              - type
+              - isRequired
+            properties:
+              name:
+                type: string
+                description: 'Name of the field'
+              type:
+                type: string
+                enum:
+                  - NUMBER
+                  - STRING
+                  - DATE 
+                  - BOOLEAN
+                description: 'Data type of the field (e.g., string, integer, etc.)'
+              isRequired:
+                type: boolean
+                description: 'Indicates whether the field is required'
+  drop-column:
+      type: object
+      required: 
+            - fields
+      properties:
+        fields:
+          type: array
+          description: 'List of fields for the table'
+          items:
+            type: string
+            description: 'name column'
+  record:
+      type: object
+      
+    
+
+schemes:
+ - https
+ - http
+
+
+        # this.router.get(`${this.path}`, this.table.getTables);
+        # this.router.post(`${this.path}`, ValidationMiddleware(CreateTableDto), this.table.createTable)
+        # this.router.get(`${this.path}/:table`, this.schema.getTableSchemaByName)
+        # this.router.delete(`${this.path}/:table`, this.table.deleteTable)
+        # this.router.post(`${this.path}/:table/add-column`, ValidationMiddleware(AddColumnTableDto), this.schema.addColumn)
+        # this.router.post(`${this.path}/:table/drop-column`, ValidationMiddleware(DropColumnTableDto), this.schema.dropColumn)

@@ -1,0 +1,38 @@
+# baseURL
+@baseURL = http://localhost:3000/api/v2
+
+###
+# Find 
+GET {{ baseURL }}/10/dosen
+
+
+###
+# Find one
+GET {{ baseURL }}/10/dosen/1
+
+
+###
+# Create 
+POST  {{ baseURL }}/10/dosen
+Content-Type: application/json
+
+{
+    "nama": "Project Test 5 mongo",
+    "alamat" : "Jopaten"
+}
+
+
+###
+# Update 
+PUT  {{ baseURL }}/10/dosen/6
+Content-Type: application/json
+
+{
+    "nama": "Jono",
+    "alamat" : "Jopaten"
+}
+
+
+###
+# Delete 
+DELETE  {{ baseURL }}/10/dosen/1
